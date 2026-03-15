@@ -1,0 +1,79 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Check your answers before sending" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {{ govukBackLink({ text: "Back", href: "javascript:history.back()" }) }}
+
+    <h1 class="govuk-heading-xl">Check your answers before sending</h1>
+
+    {{ govukSummaryList({
+      rows: [
+      {
+        key: { text: "What century are you from?" },
+        value: { text: data["time-period"] if data["time-period"] else "Not answered" },
+        actions: {
+          items: [{
+            href: "/time-period",
+            text: "Change",
+            visuallyHiddenText: "what century are you from?"
+          }]
+        }
+      },
+      {
+        key: { text: "Is this your first visit to the present day?" },
+        value: { text: data["previous-visit"] if data["previous-visit"] else "Not answered" },
+        actions: {
+          items: [{
+            href: "/previous-visit",
+            text: "Change",
+            visuallyHiddenText: "is this your first visit to the present day?"
+          }]
+        }
+      },
+      {
+        key: { text: "Which social situation do you need the most help with?" },
+        value: { text: data["social-situation"] if data["social-situation"] else "Not answered" },
+        actions: {
+          items: [{
+            href: "/social-situation",
+            text: "Change",
+            visuallyHiddenText: "which social situation do you need the most help with?"
+          }]
+        }
+      },
+      {
+        key: { text: "How do you want to receive your guide?" },
+        value: { text: data["contact-method"] if data["contact-method"] else "Not answered" },
+        actions: {
+          items: [{
+            href: "/contact-method",
+            text: "Change",
+            visuallyHiddenText: "how do you want to receive your guide?"
+          }]
+        }
+      },
+      {
+        key: { text: "What is your full name?" },
+        value: { text: data["full-name"] if data["full-name"] else "Not answered" },
+        actions: {
+          items: [{
+            href: "/full-name",
+            text: "Change",
+            visuallyHiddenText: "what is your full name?"
+          }]
+        }
+      }
+      ]
+    }) }}
+
+    <form method="post" novalidate>
+      {{ govukButton({ text: "Confirm and send" }) }}
+    </form>
+
+  </div>
+</div>
+{% endblock %}
