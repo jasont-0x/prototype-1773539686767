@@ -1,0 +1,43 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "How do you want to receive your guide?" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {{ govukBackLink({ text: "Back", href: "javascript:history.back()" }) }}
+
+    {% if errors and errors["contact-method"] %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: [{ text: errors["contact-method"], href: "#contact-method" }]
+    }) }}
+    {% endif %}
+
+    <form method="post" novalidate>
+    {{ govukRadios({
+      name: "contact-method",
+      fieldset: {
+        legend: {
+          text: "How do you want to receive your guide?",
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--l"
+        }
+      },
+      hint: { text: "Select your preferred delivery method." },
+      errorMessage: errors["contact-method"] if errors else null,
+      value: data["contact-method"],
+      items: [
+        { value: "physical-booklet", text: "Physical booklet" },
+        { value: "digital-download", text: "Digital download" },
+        { value: "neural-implant", text: "Neural implant" },
+        { value: "holographic-projection", text: "Holographic projection" }
+      ]
+    }) }}
+      {{ govukButton({ text: "Continue" }) }}
+    </form>
+
+  </div>
+</div>
+{% endblock %}
