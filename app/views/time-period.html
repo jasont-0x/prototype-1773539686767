@@ -1,0 +1,43 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "What century are you from?" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {{ govukBackLink({ text: "Back", href: "javascript:history.back()" }) }}
+
+    {% if errors and errors["time-period"] %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: [{ text: errors["time-period"], href: "#time-period" }]
+    }) }}
+    {% endif %}
+
+    <form method="post" novalidate>
+    {{ govukRadios({
+      name: "time-period",
+      fieldset: {
+        legend: {
+          text: "What century are you from?",
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--l"
+        }
+      },
+      hint: { text: "Select the century you originated from." },
+      errorMessage: errors["time-period"] if errors else null,
+      value: data["time-period"],
+      items: [
+        { value: "22nd-century-2100s", text: "22nd century (2100s)" },
+        { value: "23rd-century-2200s", text: "23rd century (2200s)" },
+        { value: "24th-century-2300s", text: "24th century (2300s)" },
+        { value: "25th-century-or-later", text: "25th century or later" }
+      ]
+    }) }}
+      {{ govukButton({ text: "Continue" }) }}
+    </form>
+
+  </div>
+</div>
+{% endblock %}
