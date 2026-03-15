@@ -1,0 +1,44 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Which social situation do you need the most help with?" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {{ govukBackLink({ text: "Back", href: "javascript:history.back()" }) }}
+
+    {% if errors and errors["social-situation"] %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: [{ text: errors["social-situation"], href: "#social-situation" }]
+    }) }}
+    {% endif %}
+
+    <form method="post" novalidate>
+    {{ govukRadios({
+      name: "social-situation",
+      fieldset: {
+        legend: {
+          text: "Which social situation do you need the most help with?",
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--l"
+        }
+      },
+      hint: { text: "Choose the one that concerns you most." },
+      errorMessage: errors["social-situation"] if errors else null,
+      value: data["social-situation"],
+      items: [
+        { value: "meeting-new-people", text: "Meeting new people" },
+        { value: "workplace-interactions", text: "Workplace interactions" },
+        { value: "using-technology", text: "Using technology" },
+        { value: "shopping-and-services", text: "Shopping and services" },
+        { value: "dining-and-entertainment", text: "Dining and entertainment" }
+      ]
+    }) }}
+      {{ govukButton({ text: "Continue" }) }}
+    </form>
+
+  </div>
+</div>
+{% endblock %}
